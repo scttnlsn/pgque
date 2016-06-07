@@ -1,0 +1,4 @@
+# pgque extension
+comment = 'Job queue using advisory locks'
+default_version = '0.1.0'
+relocatable = true
