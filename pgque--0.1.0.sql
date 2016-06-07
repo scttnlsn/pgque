@@ -53,6 +53,11 @@ WHERE locked
 LIMIT 1
 $$ LANGUAGE 'sql';
 
+CREATE OR REPLACE FUNCTION pgque_unlock(id BIGINT)
+RETURNS BOOL AS $$
+SELECT pg_advisory_unlock(id);
+$$ LANGUAGE 'sql';
+
 CREATE OR REPLACE FUNCTION pgque_destroy(id BIGINT)
 RETURNS VOID AS $$
 BEGIN

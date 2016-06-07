@@ -39,6 +39,18 @@ FROM pgque_lock('foo');
 
 INSERT INTO test_results
 SELECT
+  'Unlock locked job',
+  pgque_unlock
+FROM pgque_unlock((SELECT id FROM pgque_jobs WHERE priority = 50 LIMIT 1)::BIGINT);
+
+INSERT INTO test_results
+SELECT
+  'Unlock unlocked job',
+  NOT pgque_unlock
+FROM pgque_unlock((SELECT id FROM pgque_jobs WHERE priority = 100 LIMIT 1)::BIGINT);
+
+INSERT INTO test_results
+SELECT
   'Destroy low priority job',
   COUNT(*) = 1
 FROM pgque_destroy((SELECT id FROM pgque_jobs WHERE priority = 50 LIMIT 1)::BIGINT);
